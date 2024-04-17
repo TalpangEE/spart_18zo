@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>18조 팀규칙</title>
+
+    <!-- jQuery제이쿼리 링크 -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+    <!-- BootStrap부트스트랩 링크 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <style>
+        /* 구글폰트 적용: Single Day (적용은 class="single-day-regular") */
+        @import url('https://fonts.googleapis.com/css2?family=Single+Day&display=swap');
+
+        /* 폰트 상세설정 */
+        .single-day-regular {
+            font-family: "Single Day", cursive;
+            font-weight: 400;
+            font-style: normal;
+        }
+
+        /* 탑헤더 설정 */
+        .topheader {
+
+            /* 탑헤더 위치 설정 */
+            top: 0;
+            left: 0;
+            position: absolute;
+
+            /* 탑헤더 크기 설정 */
+            width: 100%;
+            height: 70px;
+
+            /* 탑헤더 기타 설정 */
+            background-color: beige;
+        }
+
+        /* 홈(hm)버튼 설정 */
+        .hmbtn {
+
+            /* 홈(hm)버튼 위치 설정 */
+            top: 5px;
+            left: 5px;
+            position: absolute;
+
+            /* 홈(hm)버튼 크기&모양 설정 */
+            width: 60px;
+            height: 60px;
+            border-radius: 20%;
+            border: solid;
+            background-color: beige;
+
+            /* 홈(hm)버튼 폰트 설정 */
+            font-size: 50px;
+            font-weight: bold;
+
+            /* 홈(hm)버튼 기타 설정 */
+
+        }
+
+        /* 홈(hm)버튼 hover 설정 */
+        .hmbtn:hover {
+            background-color: black;
+            color: beige;
+            font-weight: bolder;
+        }
+
+        /* 홈(hm)버튼 부트스트랩 설정 강제로 풀기 */
+        #hhh {
+            align-content: center;
+            vertical-align: center;
+            text-align: center;
+            align-items: center;
+            justify-content: center;
+            display: flex;
+        }
+
+        /* 메뉴(tr,tm,tc)버튼 전체 설정 */
+        #menubtn {
+
+            /* 메뉴(tr,tm,tc)버튼 폰트 설정 */
+            font-size: 25px;
+            font-family: "Single Day", cursive;
+            font-weight: 400;
+            font-style: normal;
+
+            /* 수직 정렬이 왜 적용 안되는지 잘 모르겠음 HELP */
+            vertical-align: text-bottom;
+        }
+
+        /* 메뉴(tr,tm,tc)버튼 hover 설정 */
+        #menubtn:hover {
+            background-color: black;
+            color: beige;
+            font-weight: bolder;
+        }
+
+        /* 팀규칙(tr)버튼 설정 */
+        .trbtn {
+            /* 팀규칙(tr)버튼 위치 설정 */
+            top: 0px;
+            left: 150px;
+            position: absolute;
+            /* 팀규칙(tr)버튼 크기&모양 설정 */
+            width: 300px;
+            height: 70px;
+            border-radius: 0;
+            border: 0;
+            background-color: rgba(22, 194, 45, 0.658);
+            color: black;
+        }
+
+        /* 팀원소개(tm)버튼 설정 */
+        .tmbtn {
+            /* 팀원소개(tm)버튼 위치 설정 */
+            top: 0px;
+            left: 450px;
+            position: absolute;
+            /* 팀원소개(tm)버튼 크기&모양 설정 */
+            width: 300px;
+            height: 70px;
+            border-radius: 0;
+            border: 0;
+            background-color: beige;
+            color: black;
+        }
+
+        /* 응원하기(cu)버튼 설정 */
+        .cubtn {
+            /* 응원하기(cu)버튼 위치 설정 */
+            top: 0px;
+            left: 750px;
+            position: absolute;
+            /* 응원하기(cu)버튼 크기&모양 설정 */
+            width: 300px;
+            height: 70px;
+            border-radius: 0;
+            border: 0;
+            background-color: beige;
+            color: black;
+        }
+
+        /* 여기까지가 헤더설정이었음 */
+
+
+        
+        /* 여기서부터 팀규칙 컨텐츠 시작! */
+
+
+    </style>
+
+    <script type="module">
+
+        // 헤더에서 클릭하면 각 페이지로 이동하는 동작들
+        $(".hmbtn").click(async function () {
+            window.location.href = "index.html";
+        })
+        $(".trbtn").click(async function () {
+            window.location.href = "menu1_tr.html";
+        })
+        $(".tmbtn").click(async function () {
+            window.location.href = "menu2_tm.html";
+        })
+        $(".cubtn").click(async function () {
+            window.location.href = "menu3_cu.html";
+        })
+
+    </script>
+
+</head>
+
+<body>
+
+    <!-- 탑헤더  -->
+    <div class="topheader">
+        <!-- 탑헤더 메뉴버튼 생성 -->
+        <button type="button" id="hhh" class="hmbtn">H</button>
+        <button type="button" id="menubtn" class="trbtn">팀규칙</button>
+        <button type="button" id="menubtn" class="tmbtn">팀원소개</button>
+        <button type="button" id="menubtn" class="cubtn">응원하기</button>
+    </div>
+
+    <!--  -->
+
+</body>
+
+</html>
