@@ -148,10 +148,38 @@
         /* 여기까지가 헤더설정이었음 */
 
 
-        
+
         /* 여기서부터 팀규칙 컨텐츠 시작! */
+        .container{
+            left:550px;
+            top:70px;
+            position:absolute;
+        }
+        .text{
+            padding-left: 250px;
+            font-size: 40px;
+            font-family: "Single Day", cursive;
+            font-weight: 400;
+            font-style: normal;
+            color:red;
 
-
+        }
+        .card {
+            /*팀 규칙 위치설정*/
+            top: 100px;
+            left: 250px;
+            /*팀 규칙 크기&모양설정*/
+            border-radius: 10%;
+            border-color: rgba(22, 194, 45, 0.658);
+            background-color: rgba(105, 54, 177, 0.638);
+            color: beige;
+            /*팀 규칙 폰트설정*/
+            font-size: 25px;
+            font-family: "Single Day", cursive;
+            font-weight: 400;
+            font-style: normal;
+        }
+      
     </style>
 
     <script type="module">
@@ -169,7 +197,7 @@
         $(".cubtn").click(async function () {
             window.location.href = "menu3_cu.html";
         })
-
+        
     </script>
 
 </head>
@@ -185,7 +213,20 @@
         <button type="button" id="menubtn" class="cubtn">응원하기</button>
     </div>
 
-    <!--  -->
+    <!--팀규칙 본문시작-->
+    <div class="card" style="width: 18rem;">
+        <div class="card-body">
+            <h5 class="card-title">팀규칙</h5>
+            <p class="card-text">절대절대 지각하지 않기!!</p>
+            <p class="card-text">식사시간(12:00 ~ 13:00, 18:00 ~ 19:00)</p>
+            <p class="card-text">서로서로 도와요! 함께 배워나가는거니 질문도 망설이지말기</p>
+        </div>
+    </div>
+    <div class="container">
+        <img src="https://opgg-com-image.akamaized.net/attach/images/20200729030331.589638.jpg">
+        <p class="text">이것이 규칙이다.</p>  
+    </div>
+    </div>
 
 </body>
 
