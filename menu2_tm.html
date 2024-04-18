@@ -155,6 +155,7 @@
 
         /* 여기서부터 팀원소개 컨텐츠 시작! */
 
+
         .content-wrap {
             padding: 3%;
             margin-top: 100px;
@@ -169,17 +170,33 @@
 
             width: 80px;
             height: 80px;
-            border-radius: 50%;
+            border-radius: 5px;
             border: 1px black solid;
 
             display: flex;
             justify-content: center;
             align-items: center;
+
+            background-color: beige;
+            color: black;
+            font-size: 40px;
+            font-weight: bold;
+
+            /* line-height 부분이 왜 먹통인지 이해 안됨 HELP */
+
+        }
+
+        .addbox:hover {
+            background-color: black;
+            color: beige;
+            font-weight: bold;
         }
 
         /* 팀원 소개 카드 */
         .card-wrap {
             width: 300px;
+            height: 360px;
+            border-radius: 5px;
         }
 
         .card-box-wrap {
@@ -195,15 +212,26 @@
         .card-image {
             width: 120px;
             height: 160px;
+            object-fit: cover;
+        }
+
+        .card-deter {
+            height: 65px;
+            line-height: 20px;
         }
 
         .card-del {
             margin-bottom: 5px;
         }
 
-
         .card-text {
+            margin-top: 11px;
             margin-left: 10px;
+            line-height: 10px;
+        }
+
+        .btnbg {
+            text-align: right;
         }
 
         /* 카드 내부 아이콘 */
@@ -218,11 +246,15 @@
 
         /* 입력 폼 스타일 */
         .member-form {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background-color: #f9f9f9;
+
+            display: none;
+
+            width: 500px;
+            height: 490px;
+            position: relative;
+            margin: 100px auto auto auto;
+
+            background-color: rgba(22, 194, 45, 0.658);
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -233,20 +265,72 @@
             padding: 10px;
             width: 100%;
             box-sizing: border-box;
+            z-index: 1;
         }
 
         .member-form button {
+            width: 49%;
             padding: 10px 20px;
             border: none;
             border-radius: 5px;
-            background-color: black;
-            color: beige;
+            background-color: beige;
+            color: black;
+            font-weight: bold;
             cursor: pointer;
         }
 
         .member-form button:hover {
-            background-color: beige;
-            color: black;
+            background-color: black;
+            color: beige;
+        }
+
+        .modal-box {
+            width: 500px;
+            height: 490px;
+            margin: 0 auto;
+            padding: 20px;
+            text-align: center;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+            background-color: rgba(22, 194, 45);
+            display: flex;
+            justify-content: column;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 999;
+
+            display: none;
+        }
+
+        .modal-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0, 5);
+            z-index: 99;
+
+            display: none;
+        }
+
+        .modal-input {
+            width: 460px;
+            height: 48px;
+            margin: 0px 0px 10px;
+            padding: 10px;
+        }
+
+        .modal-btn {
+            width: 49%;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
         }
     </style>
 
@@ -287,7 +371,7 @@
 
             let html_temp = `
             <div class="col card-wrap">
-                <div class="card h-100 ">
+                <div class="card h-100 " style="background-color: beige;">
                     <div class="card-body">
                         <div class="icon-box">
                             <span class="material-symbols-outlined card-edit" id="${docId}">
@@ -300,28 +384,37 @@
 
 
                         <div class="card-box-wrap">
-                            <img class="card-image" src="${row['image-url']}"></img>
+                            <img  id="${docId}" class="card-image" src="${row['image-url']}"></img>
                             <div class="card-box">
-                                <p class="card-text">${row['name']}</p>
-                                <p class="card-text">${row['mbti']}</p>
-                                <p class="card-text">${row['strength']}</p>
+                                <p class="card-text" style="font-size:20px; font-weight:bold;">이름 :</p>
+                                <p class="card-text card-name" id="${docId}">${row['name']}</p>
+                                <p class="card-text" style="font-size:20px; font-weight:bold;">MBTI ?</p>
+                                <p class="card-text card-mbti" id="${docId}">${row['mbti']}</p>
+                                <p class="card-text" style="font-size:20px; font-weight:bold;">장점3글자♥</p>
+                                <p class="card-text card-strength" id="${docId}">${row['strength']}</p>
                             </div>
                         </div>
-                        <p class="card-text">${row['determination']}</p>
 
+                        <div class="card-deter">
+                            <p style="font-size:20px; font-weight:bold; margin-bottom:3px; margin-top:10px;">각오!!!</p>
+                            <p  id="${docId}" class="card-determination">${row['determination']}</p>
+                        </div>
+
+                        <div class="btnbg">
                         <span id="${docId}" class="material-symbols-outlined thumb_up">
                             thumb_up
                         </span>
                         <span id="${docId}" class="likes-num">${row['likes']}</span>
+                        </div>
 
-                        <div>
+                        <div class="btnbg">
                             <button type="button" class="icon-btn">
-                                <a href="${row['blog']}" target="_blank">
+                                <a id="${docId}" class="card-blog"href="${row['blog']}" target="_blank">
                                     <img class="icon-img" src="./image/blog.png">
                                 </a>
                             </button>
                             <button type="button" class="icon-btn">
-                                <a href="${row['github']}" target="_blank">
+                                <a id="${docId}" class="card-github" href="${row['github']}" target="_blank">
                                     <img class="icon-img" src="./image/github-mark.png">
                                 </a>
                             </button>
@@ -335,21 +428,60 @@
 
         // 팀원 수정
         $("#content").on('click', '.card-edit', async function (e) {
-            console.log(e.target.id)
+            let clickedId = e.target.id
 
+            let name = $(".card-name#" + clickedId).text();
+            let imageUrl = $(".card-image#" + clickedId).attr("src");
+            let mbti = $(".card-mbti#" + clickedId).text();
+            let strength = $(".card-strength#" + clickedId).text();
+            let determination = $(".card-determination#" + clickedId).text();
+            let github = $(".card-github#" + clickedId).attr("href");
+            let blog = $(".card-blog#" + clickedId).attr("href");
+
+            $("#modal-name").val(name);
+            $("#modal-image-url").val(imageUrl);
+            $("#modal-mbti").val(mbti);
+            $("#modal-strength").val(strength);
+            $("#modal-determination").val(determination);
+            $("#modal-github").val(github);
+            $("#modal-blog").val(blog);
+
+            $(".modal-box").show()
+
+            $("#edit-btn").on('click', async function () {
+                console.log("1")
+                let editedData = {
+                    name: $("#modal-name").val(),
+                    imageUrl: $("#modal-image-url").val(),
+                    mbti: $("#modal-mbti").val(),
+                    strength: $("#modal-strength").val(),
+                    determination: $("#modal-determination").val(),
+                    github: $("#modal-github").val(),
+                    blog: $("#modal-blog").val()
+                };
+
+                await updateDoc(doc(db, "members", clickedId), editedData);
+                window.location.reload();
+            });
+
+            $("#modal-close-btn").on('click', async function () {
+                $(".modal-box").hide()
+            });
         });
+
+
+
 
         // 팀원 좋아요 수 추가
         $("#content").on('click', '.thumb_up', async function (e) {
 
             let clickedId = e.target.id
-            let clikedLikesNum = parseInt(
-                $(".likes-num#" + clickedId).text()
-            ) + 1;
+            let clikedLikesNum = parseInt($(".likes-num#" + clickedId).text()) + 1;
 
             await updateDoc(doc(db, "members", clickedId), {
                 'likes': clikedLikesNum
             });
+
             window.location.reload();
         });
 
@@ -360,22 +492,7 @@
         });
 
 
-        // 팀원 추가 폼 표시
-        $(".addbox").click(function () {
-            const formHtml = `
-                <div class="member-form">
-                    <input type="text" id="name" placeholder="이름">
-                    <input type="text" id="image-url" placeholder="이미지 URL">
-                    <input type="text" id="mbti" placeholder="MBTI">
-                    <input type="text" id="strength" placeholder="Strength">
-                    <input type="text" id="determination" placeholder="다짐">
-                    <input type="text" id="github" placeholder="GitHub URL">
-                    <input type="text" id="blog" placeholder="Blog URL">
-                    <button type="button" id="submit-btn">추가</button>
-                </div>
-            `;
-            $("body").append(formHtml);
-        });
+
 
         // 팀원 추가 폼 제출
         $("body").on("click", "#submit-btn", async function () {
@@ -395,17 +512,20 @@
                 determination,
                 github,
                 blog,
-                likes: 0
+                likes: 54867
             });
-
-            $(".member-form").remove();
             window.location.reload();
         });
 
-        // 페이지 로드 시 팀원 표시
-        $(document).ready(function () {
-            displayMembers();
-        });
+        // 제이쿼리로 팀원추가(addbox)버튼 누르면 memberplus 토글
+        $("#addmember").click(async function () {
+            $('#memberplus').toggle();
+        })
+
+        // 
+        $("#cancel-btn").click(async function () {
+            window.location.reload();
+        })
 
     </script>
 </head>
@@ -422,12 +542,42 @@
     </div>
 
     <!-- 팀원소개 컨텐츠 시작 -->
+
+    <div class="modal" id="memberplus">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <input type="text" id="name" placeholder="이름">
+            <input type="text" id="image-url" placeholder="이미지 URL">
+            <input type="text" id="mbti" placeholder="MBTI">
+            <input type="text" id="strength" placeholder="장점 3글자로!">
+            <input type="text" id="determination" placeholder="다짐">
+            <input type="text" id="blog" placeholder="Blog URL">
+            <input type="text" id="github" placeholder="Github URL">
+            <button id="submit-btn" type="button" class="btn btn-danger">팀원추가</button>
+            <button id="cancel-btn" type="button" class="btn btn-secondary">취소</button>
+        </div>
+    </div>
+
+    <div class="modal-box">
+        <input type="text" id="modal-name" class="modal-input" placeholder="이름">
+        <input type="text" id="modal-image-url" class="modal-input" placeholder="이미지 URL">
+        <input type="text" id="modal-mbti" class="modal-input" placeholder="MBTI">
+        <input type="text" id="modal-strength" class="modal-input" placeholder="장점 3글자로!">
+        <input type="text" id="modal-determination" class="modal-input" placeholder="다짐">
+        <input type="text" id="modal-blog" class="modal-input" placeholder="Blog URL">
+        <input type="text" id="modal-github" class="modal-input" placeholder="Github URL">
+        <div class="modal-btn-box">
+            <button id="edit-btn" type="button" class="modal-btn btn btn-danger">수정하기</button>
+            <button id="modal-close-btn" type="button" class="modal-btn btn btn-secondary">취소</button>
+        </div>
+    </div>
+    <div class="modal-bg"></div>
+
     <div class="content-wrap">
         <div id="content" class="row row-cols-1 row-cols-md-6 g-4">
             <!-- 팀원 추가 버튼 -->
-            <div class="addbox">추가하기</div>
+            <div id="addmember" class="addbox">+</div>
 
-            <!-- 근데 여기서 줄바꿈이 왜 안되는지 모르겠습니다. HELP!! -->
         </div>
     </div>
 
