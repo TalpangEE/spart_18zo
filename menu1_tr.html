@@ -150,20 +150,26 @@
 
 
         /* 여기서부터 팀규칙 컨텐츠 시작! */
-        .container{
-            left:550px;
-            top:70px;
-            position:absolute;
+        .container {
+            align-items: center;
+            margin-left: 250px;
+            top: 70px;
+            position: absolute;
         }
-        .text{
-            padding-left: 250px;
+
+        .text {
+            margin-left: 225px;
             font-size: 40px;
             font-family: "Single Day", cursive;
             font-weight: 400;
             font-style: normal;
-            color:red;
+            color: red;
+            background-color: bisque;
+            border-radius: 40%;
+            border: 1px solid white;
 
         }
+
         .card {
             /*팀 규칙 위치설정*/
             top: 100px;
@@ -179,7 +185,6 @@
             font-weight: 400;
             font-style: normal;
         }
-      
     </style>
 
     <script type="module">
@@ -197,9 +202,69 @@
         $(".cubtn").click(async function () {
             window.location.href = "menu3_cu.html";
         })
-        
     </script>
+    <script>
+        // 문서가 준비되면 실행
+        $(function () {
+            // 이것이 규칙이다 버튼 클릭 시 팝업창 내용
+            $(".text").click(function () {
+                var ruleContent = `
+                    <div>
+                        <h3>팀규칙</h3>
+                        <p>절대 지각하지 않기!!</p>
+                        <p>식사시간: 12:00 ~ 13:00, 18:00 ~ 19:00</p>
+                        <p>서로 도와요! 함께 배워나가는 거니 질문도 망설이지 말기</p>
+                    </div>
+                `;
+                openPopup(ruleContent);
+            });
 
+             // 팝업 오픈시 열리는 창 스타일
+    function openPopup(content) {
+        var popup = window.open("", "_blank", "width=400,height=300");
+        popup.document.write(`
+            <html>
+            <head>
+                <title>팝업창</title>
+                <style>
+                    @import url('https://fonts.googleapis.com/css2?family=Single+Day&display=swap');
+                    body {
+                        font-size: 20px; 
+                        font-family: "Single Day", cursive;
+                        background-color: white; 
+                    }
+                    h3 {
+                        color: #333;
+                        font-size: 24px; 
+                    }
+                    p {
+                        margin-bottom: 10px;
+                        color: #666; 
+                    }
+                    button {
+                        padding: 10px 20px;
+                        background-color: skyblue; 
+                        color: black;
+                        border: none;
+                        cursor: pointer;
+                        border-radius: 20%;
+                    }
+                    button:hover {
+                        background-color: #327bc9; 
+                    }
+                </style>
+            </head>
+            <body>
+                ${content}
+                <button onclick="window.close();">닫기</button>
+            </body>
+            </html>
+        `);
+    }
+            
+        }
+    );
+    </script>
 </head>
 
 <body>
@@ -214,17 +279,10 @@
     </div>
 
     <!--팀규칙 본문시작-->
-    <div class="card" style="width: 18rem;">
-        <div class="card-body">
-            <h5 class="card-title">팀규칙</h5>
-            <p class="card-text">절대절대 지각하지 않기!!</p>
-            <p class="card-text">식사시간(12:00 ~ 13:00, 18:00 ~ 19:00)</p>
-            <p class="card-text">서로서로 도와요! 함께 배워나가는거니 질문도 망설이지말기</p>
-        </div>
-    </div>
+
     <div class="container">
         <img src="https://opgg-com-image.akamaized.net/attach/images/20200729030331.589638.jpg">
-        <p class="text">이것이 규칙이다.</p>  
+        <p><button class="text">이것이 규칙이다.</button></p>
     </div>
     </div>
 
