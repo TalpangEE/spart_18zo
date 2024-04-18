@@ -206,7 +206,7 @@
         /* 응원하기 토글박스 (스티커 작성부) */
         .cuboxc {
             display: none;
-            
+
             background-color: rgba(22, 194, 45, 0.658);
             width: 400px;
             height: 315px;
@@ -238,14 +238,19 @@
 
         /* 스티커 크기 규정 */
         .col {
-            width: 140px;
+            width: 180px;
             height: 265px;
             border-radius: 15px;
             margin-bottom: 30px;
+            margin-left: -10px;
             background-color: white;
-
-            z-index: -1;
+            position: relative;
+            pointer-events: none;
         }
+        .col>button {
+            pointer-events: auto;
+        }
+
 
         /* 스티커 색상 규정 */
         .card-body {
@@ -261,20 +266,32 @@
 
         /* 스티커 삭제 X버튼 */
         .card-del {
-            color: red;
+            width: 25px;
+            height: 25px;
+            border: solid 1px;
+            color: black;
+            margin-right: 0px;
+            background-color: beige;
+            flex-direction: column;
+            border-radius: 50%;
+            position: relative;
         }
 
+        .card-del:hover {
+            background-color: black;
+            color: beige;
+        }
     </style>
 
     <!-- Firebase Config 파일 삽입 -->
-    <script src="config.js" ></script>
+    <script src="config.js"></script>
 
     <script type="module">
         // Firebase SDK 라이브러리 가져오기
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
         import { getFirestore } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
         import { collection, addDoc } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
-        import { getDocs, orderBy, query } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+        import { getDocs, deleteDoc, updateDoc, doc } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
 
         // Firebase 인스턴스 초기화
         const app = initializeApp(firebaseConfig);
@@ -300,7 +317,7 @@
             let guestpw = $('#guestpw').val();
             let guestcu = $('#guestcu').val();
 
-            // 나중에 시간순서대로 정렬하는 기능 구현하려고 임시로 만들어둔 변수입니다
+            // 나중에 시간순서대로 정렬하는 기능 구현하려고 임시로 만들어둔 변수입니다 (보류)
             let guestnow = new Date();
             let guesttime = guestnow.toLocaleString();
             let guesttimestk = guestnow.toLocaleDateString();
@@ -308,10 +325,10 @@
             let doc = {
                 'guestname': guestname,
                 'guestpw': guestpw,
-                'guestcu': guestcu, 
+                'guestcu': guestcu,
+                'guestnow': guestnow,
                 'guesttime': guesttime,
-                'guesttimestk': guesttimestk,
-                'guestnow': guestnow
+                'guesttimestk': guesttimestk
             };
 
             await addDoc(collection(db, "cu"), doc);
@@ -325,7 +342,7 @@
             window.location.reload();
         })
 
-
+        // 파이어베이스에 저장된 스티커들 조회 + 모두 불러오기
         let docs = await getDocs(collection(db, "cu"));
         docs.forEach((doc) => {
             let row = doc.data();
@@ -337,14 +354,14 @@
             let guesttimestk = row['guesttimestk'];
             let guestnow = row['guestnow'];
             // 임시로 시간-분-초 삭제한 변수(guesttimestk) 추가해뒀습니다. 스티커에 표시되는 시간입니다.
-            
 
-            // 스티커 이어서 붙이는 기능 ++++ X버튼 누르면 삭제되는 기능 추가할 것!!! HELP!!!
+
+            // 스티커 이어서 붙이는 기능
             let temp_html = `
             <div class="col">
-                <div class="card h-100">
-                    <div class="card-body">            
-                        <p class="card-del" align="right">❌</p>
+                <button class="card-del" id="${doc.id}" style="float: right;">X</button> 
+                <div class="card h-100">                    
+                    <div class="card-body"> 
                         <p class="card-title">From. ${guestname}</p>
                         <p class="card-text">${guestcu}</p>
                         <p class="card-text">${guesttimestk}</p>
@@ -352,6 +369,16 @@
                 </div>
             </div>`;
             $('#stkspaced').append(temp_html);
+        });
+
+        // 스티커 삭제 기능
+
+        $("#stkspaced").on('click', '.card-del', async function (e) {
+
+            console.log(e.target.id)
+            await deleteDoc(doc(db, "cu", e.target.id));
+
+            window.location.reload();
         });
 
         // 제이쿼리로 응원하기 박스(cuboxd) 토글
