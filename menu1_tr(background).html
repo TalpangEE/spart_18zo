@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>18조 팀규칙</title>
+
+    <!-- jQuery제이쿼리 링크 -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+    <!-- BootStrap부트스트랩 링크 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <style>
+        /* 구글폰트 적용: Single Day (적용은 class="single-day-regular") */
+        @import url('https://fonts.googleapis.com/css2?family=Single+Day&display=swap');
+
+        /* 폰트 상세설정 */
+        .single-day-regular {
+            font-family: "Single Day", cursive;
+            font-weight: 400;
+            font-style: normal;
+        }
+
+        /* 탑헤더 설정 */
+        .topheader {
+
+            /* 탑헤더 위치 설정 */
+            top: 0;
+            left: 0;
+            position: absolute;
+
+            /* 탑헤더 크기 설정 */
+            width: 100%;
+            height: 70px;
+
+            /* 탑헤더 기타 설정 */
+            background-color: beige;
+        }
+
+        /* 홈(hm)버튼 설정 */
+        .hmbtn {
+
+            /* 홈(hm)버튼 위치 설정 */
+            top: 5px;
+            left: 5px;
+            position: absolute;
+
+            /* 홈(hm)버튼 크기&모양 설정 */
+            width: 60px;
+            height: 60px;
+            border-radius: 20%;
+            border: solid;
+            background-color: beige;
+
+            /* 홈(hm)버튼 폰트 설정 */
+            font-size: 50px;
+            font-weight: bold;
+
+            /* 홈(hm)버튼 기타 설정 */
+
+        }
+
+        /* 홈(hm)버튼 hover 설정 */
+        .hmbtn:hover {
+            background-color: black;
+            color: beige;
+            font-weight: bolder;
+        }
+
+        /* 홈(hm)버튼 부트스트랩 설정 강제로 풀기 */
+        #hhh {
+            align-content: center;
+            vertical-align: center;
+            text-align: center;
+            align-items: center;
+            justify-content: center;
+            display: flex;
+        }
+
+        /* 메뉴(tr,tm,tc)버튼 전체 설정 */
+        #menubtn {
+
+            /* 메뉴(tr,tm,tc)버튼 폰트 설정 */
+            font-size: 25px;
+            font-family: "Single Day", cursive;
+            font-weight: 400;
+            font-style: normal;
+
+            /* 수직 정렬이 왜 적용 안되는지 잘 모르겠음 HELP */
+            vertical-align: text-bottom;
+        }
+
+        /* 메뉴(tr,tm,tc)버튼 hover 설정 */
+        #menubtn:hover {
+            background-color: black;
+            color: beige;
+            font-weight: bolder;
+        }
+
+        /* 팀규칙(tr)버튼 설정 */
+        .trbtn {
+            /* 팀규칙(tr)버튼 위치 설정 */
+            top: 0px;
+            left: 150px;
+            position: absolute;
+            /* 팀규칙(tr)버튼 크기&모양 설정 */
+            width: 300px;
+            height: 70px;
+            border-radius: 0;
+            border: 0;
+            background-color: rgba(22, 194, 45, 0.658);
+            color: black;
+        }
+
+        /* 팀원소개(tm)버튼 설정 */
+        .tmbtn {
+            /* 팀원소개(tm)버튼 위치 설정 */
+            top: 0px;
+            left: 450px;
+            position: absolute;
+            /* 팀원소개(tm)버튼 크기&모양 설정 */
+            width: 300px;
+            height: 70px;
+            border-radius: 0;
+            border: 0;
+            background-color: beige;
+            color: black;
+        }
+
+        /* 응원하기(cu)버튼 설정 */
+        .cubtn {
+            /* 응원하기(cu)버튼 위치 설정 */
+            top: 0px;
+            left: 750px;
+            position: absolute;
+            /* 응원하기(cu)버튼 크기&모양 설정 */
+            width: 300px;
+            height: 70px;
+            border-radius: 0;
+            border: 0;
+            background-color: beige;
+            color: black;
+        }
+
+        /* 여기까지가 헤더설정이었음 */
+
+
+
+        /* 여기서부터 팀규칙 컨텐츠 시작! */
+        .container {
+            align-items: center;
+            margin-left: 250px;
+            top: 70px;
+            position: absolute;
+        }
+
+        .background {
+            margin-left: 0px;
+            top: 0px;
+            align-items: center;
+            position: absolute;
+            
+            opacity: 0.3;
+            height: 450px;
+            width:750px;
+        }
+
+        .text {
+            margin-left: 225px;
+            font-size: 40px;
+            font-family: "Single Day", cursive;
+            font-weight: 400;
+            font-style: normal;
+            color: red;
+            background-color: bisque;
+            border-radius: 40%;
+            border: 1px solid white;
+
+        }
+
+        .card {
+            /*팀 규칙 위치설정*/
+            top: 100px;
+            left: 250px;
+            /*팀 규칙 크기&모양설정*/
+            border-radius: 10%;
+            border-color: rgba(22, 194, 45, 0.658);
+            background-color: rgba(105, 54, 177, 0.638);
+            color: beige;
+            /*팀 규칙 폰트설정*/
+            font-size: 25px;
+            font-family: "Single Day", cursive;
+            font-weight: 400;
+            font-style: normal;
+            background: url('https://media3.giphy.com/media/xCigPhwwgKWtFsZEpU/giphy.gif?cid=6c09b9527bbkq7kmpqulezn32v7a8sqzv7x8zlga0kn4k4ta&ep=v1_internal_gif_by_id&rid=giphy.gif');
+        }
+
+        body {background-image: url('https://i.pinimg.com/originals/9b/62/dc/9b62dc8b28a85ea72dd273c826186417.gif');
+    }
+    </style>
+
+    <script type="module">
+
+        // 헤더에서 클릭하면 각 페이지로 이동하는 동작들
+        $(".hmbtn").click(async function () {
+            window.location.href = "index.html";
+        })
+        $(".trbtn").click(async function () {
+            window.location.href = "menu1_tr.html";
+        })
+        $(".tmbtn").click(async function () {
+            window.location.href = "menu2_tm.html";
+        })
+        $(".cubtn").click(async function () {
+            window.location.href = "menu3_cu.html";
+        })
+    </script>
+    <script>
+        // 문서가 준비되면 실행
+        $(function () {
+            // 이것이 규칙이다 버튼 클릭 시 팝업창 내용
+            $(".text").click(function () {
+                var ruleContent = `
+                    <div>
+                        <h3>팀규칙</h3>
+                        <p>절대 지각하지 않기!!</p>
+                        <p>식사시간: 12:00 ~ 13:00, 18:00 ~ 19:00</p>
+                        <p>서로 도와요! 함께 배워나가는 거니 질문도 망설이지 말기</p>
+                    </div>
+                `;
+                openPopup(ruleContent);
+            });
+
+             // 팝업 오픈시 열리는 창 스타일
+    function openPopup(content) {
+        var popup = window.open("", "_blank", "width=400,height=300");
+        popup.document.write(`
+            <html>
+            <head>
+                <title>팝업창</title>
+                <style>
+                    @import url('https://fonts.googleapis.com/css2?family=Single+Day&display=swap');
+                    body {
+                        font-size: 20px; 
+                        font-family: "Single Day", cursive;
+                        background-color: white; 
+                    }
+                    h3 {
+                        color: #333;
+                        font-size: 24px; 
+                    }
+                    p {
+                        margin-bottom: 10px;
+                        color: #666; 
+                    }
+                    button {
+                        padding: 10px 20px;
+                        background-color: skyblue; 
+                        color: black;
+                        border: none;
+                        cursor: pointer;
+                        border-radius: 20%;
+                    }
+                    button:hover {
+                        background-color: #327bc9; 
+                    }
+                </style>
+            </head>
+            <body>
+                ${content}
+                <button onclick="window.close();">닫기</button>
+            </body>
+            </html>
+        `);
+    }
+            
+        }
+    );
+    </script>
+</head>
+
+<body>
+
+    <!-- 탑헤더  -->
+    <div class="topheader">
+        <!-- 탑헤더 메뉴버튼 생성 -->
+        <button type="button" id="hhh" class="hmbtn">H</button>
+        <button type="button" id="menubtn" class="trbtn">팀규칙</button>
+        <button type="button" id="menubtn" class="tmbtn">팀원소개</button>
+        <button type="button" id="menubtn" class="cubtn">응원하기</button>
+    </div>
+
+    <!--팀규칙 본문시작-->
+
+    <div class="container">
+        <div style="position: relative;">
+        <img src="https://opgg-com-image.akamaized.net/attach/images/20200729030331.589638.jpg">
+        <p><button class="text">이것이 규칙이다.</button></p></div>
+        <div class="background">
+        <div style="position: absolute; top:0px; left: 0px;">
+        <img src="https://i.giphy.com/xCigPhwwgKWtFsZEpU.webp"
+        style="width: 750px; height: 450px; opacity: 0.7;"></div></div>
+    </div>
+
+
+    </div>
+
+</body>
+
+</html>
