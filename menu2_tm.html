@@ -311,7 +311,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0, 5);
+            background-color: rgba(0, 0, 0, 0.5);
             z-index: 99;
 
             display: none;
@@ -409,7 +409,7 @@
 
                         <div class="btnbg">
                             <button type="button" class="icon-btn">
-                                <a id="${docId}" class="card-blog"href="${row['blog']}" target="_blank">
+                                <a id="${docId}" class="card-blog" href="${row['blog']}" target="_blank">
                                     <img class="icon-img" src="./image/blog.png">
                                 </a>
                             </button>
@@ -447,9 +447,9 @@
             $("#modal-blog").val(blog);
 
             $(".modal-box").show()
+            $(".modal-bg").show()
 
             $("#edit-btn").on('click', async function () {
-                console.log("1")
                 let editedData = {
                     name: $("#modal-name").val(),
                     imageUrl: $("#modal-image-url").val(),
@@ -466,11 +466,9 @@
 
             $("#modal-close-btn").on('click', async function () {
                 $(".modal-box").hide()
+                $(".modal-bg").hide()
             });
         });
-
-
-
 
         // 팀원 좋아요 수 추가
         $("#content").on('click', '.thumb_up', async function (e) {
@@ -490,9 +488,6 @@
             await deleteDoc(doc(db, "members", e.target.id));
             window.location.reload();
         });
-
-
-
 
         // 팀원 추가 폼 제출
         $("body").on("click", "#submit-btn", async function () {
