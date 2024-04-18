@@ -245,44 +245,6 @@
         }
 
         /* 입력 폼 스타일 */
-        .member-form {
-
-            display: none;
-
-            width: 500px;
-            height: 490px;
-            position: relative;
-            margin: 100px auto auto auto;
-
-            background-color: rgba(22, 194, 45, 0.658);
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        .member-form input {
-            margin-bottom: 10px;
-            padding: 10px;
-            width: 100%;
-            box-sizing: border-box;
-            z-index: 1;
-        }
-
-        .member-form button {
-            width: 49%;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            background-color: beige;
-            color: black;
-            font-weight: bold;
-            cursor: pointer;
-        }
-
-        .member-form button:hover {
-            background-color: black;
-            color: beige;
-        }
 
         .modal-box {
             width: 500px;
@@ -311,7 +273,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0, 5);
+            background-color: rgba(0, 0, 0, 0.5);
             z-index: 99;
 
             display: none;
@@ -325,6 +287,41 @@
         }
 
         .modal-btn {
+            width: 49%;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .memmodal {
+            width: 500px;
+            height: 490px;
+            margin: 0 auto;
+            padding: 20px;
+            text-align: center;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+            background-color: rgba(22, 194, 45);
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 999;
+
+
+        }
+
+        .memmodal-input {
+            width: 460px;
+            height: 48px;
+            margin: 0px 0px 10px;
+            padding: 10px;
+        }
+
+        .memmodal-btn {
             width: 49%;
             padding: 10px 20px;
             border: none;
@@ -363,13 +360,14 @@
         })
 
         //팀원 조회
-        let docs = await getDocs(collection(db, "members"));
+        async function fetchMembers() {
+            let docs = await getDocs(collection(db, "members"));
 
-        docs.forEach((doc) => {
-            let row = doc.data();
-            let docId = doc.id
+            docs.forEach((doc) => {
+                let row = doc.data();
+                let docId = doc.id;
 
-            let html_temp = `
+                let html_temp = `
             <div class="col card-wrap">
                 <div class="card h-100 " style="background-color: beige;">
                     <div class="card-body">
@@ -409,7 +407,7 @@
 
                         <div class="btnbg">
                             <button type="button" class="icon-btn">
-                                <a id="${docId}" class="card-blog"href="${row['blog']}" target="_blank">
+                                <a id="${docId}" class="card-blog" href="${row['blog']}" target="_blank">
                                     <img class="icon-img" src="./image/blog.png">
                                 </a>
                             </button>
@@ -423,8 +421,9 @@
                 </div>
             </div>
         `
-            $('#content').append(html_temp)
-        });
+                $('#content').append(html_temp)
+            });
+        }
 
         // 팀원 수정
         $("#content").on('click', '.card-edit', async function (e) {
@@ -447,9 +446,9 @@
             $("#modal-blog").val(blog);
 
             $(".modal-box").show()
+            $(".modal-bg").show()
 
             $("#edit-btn").on('click', async function () {
-                console.log("1")
                 let editedData = {
                     name: $("#modal-name").val(),
                     imageUrl: $("#modal-image-url").val(),
@@ -466,6 +465,7 @@
 
             $("#modal-close-btn").on('click', async function () {
                 $(".modal-box").hide()
+                $(".modal-bg").hide()
             });
         });
 
@@ -495,7 +495,7 @@
 
 
         // 팀원 추가 폼 제출
-        $("body").on("click", "#submit-btn", async function () {
+        async function addMember() {
             const name = $("#name").val();
             const imageUrl = $("#image-url").val();
             const mbti = $("#mbti").val();
@@ -512,21 +512,27 @@
                 determination,
                 github,
                 blog,
-                likes: 54867
+                likes: 0 // 초기 좋아요 수는 0으로 설정
             });
-            window.location.reload();
+
+            // 팀원 추가 후 페이지 새로고침
+            location.reload();
+        }
+
+        // 페이지 로드 시 팀원 조회
+        $(document).ready(async function () {
+            await fetchMembers();
+
+            // 팀원 추가 버튼 클릭 시 모달 표시/숨기기
+            $("#addmember").click(function () {
+                $("#memberplus").toggle();
+            });
+
+            // 팀원 추가 폼 제출 버튼 클릭 시
+            $("#submit-btn").click(async function () {
+                await addMember();
+            });
         });
-
-        // 제이쿼리로 팀원추가(addbox)버튼 누르면 memberplus 토글
-        $("#addmember").click(async function () {
-            $('#memberplus').toggle();
-        })
-
-        // 
-        $("#cancel-btn").click(async function () {
-            window.location.reload();
-        })
-
     </script>
 </head>
 
@@ -543,18 +549,19 @@
 
     <!-- 팀원소개 컨텐츠 시작 -->
 
-    <div class="modal" id="memberplus">
-        <div class="modal-content">
-            <span class="close-btn">&times;</span>
-            <input type="text" id="name" placeholder="이름">
-            <input type="text" id="image-url" placeholder="이미지 URL">
-            <input type="text" id="mbti" placeholder="MBTI">
-            <input type="text" id="strength" placeholder="장점 3글자로!">
-            <input type="text" id="determination" placeholder="다짐">
-            <input type="text" id="blog" placeholder="Blog URL">
-            <input type="text" id="github" placeholder="Github URL">
-            <button id="submit-btn" type="button" class="btn btn-danger">팀원추가</button>
-            <button id="cancel-btn" type="button" class="btn btn-secondary">취소</button>
+    <div class="modal-box" id="memberplus" style="display: none;">
+        <div class="memmodal">
+            <input type="text" id="name" class="memmodal-input" placeholder="이름">
+            <input type="text" id="image-url" class="memmodal-input" placeholder="이미지 URL">
+            <input type="text" id="mbti" class="memmodal-input" placeholder="MBTI">
+            <input type="text" id="strength" class="memmodal-input" placeholder="장점 3글자로!">
+            <input type="text" id="determination" class="memmodal-input" placeholder="다짐">
+            <input type="text" id="blog" class="memmodal-input" placeholder="Blog URL">
+            <input type="text" id="github" class="memmodal-input" placeholder="Github URL">
+            <div class="memmodal-btn-box">
+                <button id="submit-btn" type="button" class="memmodal-btn btn btn-danger">팀원추가</button>
+                <button id="cancel-btn" type="button" class="memmodal-btn btn btn-secondary">취소</button>
+            </div>
         </div>
     </div>
 
