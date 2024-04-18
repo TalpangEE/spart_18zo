@@ -238,14 +238,19 @@
 
         /* 스티커 크기 규정 */
         .col {
-            width: 140px;
+            width: 180px;
             height: 265px;
             border-radius: 15px;
             margin-bottom: 30px;
+            margin-left: -10px;
             background-color: white;
-
-            z-index: -1;
+            position: relative;
+            pointer-events: none;
         }
+        .col>button {
+            pointer-events: auto;
+        }
+
 
         /* 스티커 색상 규정 */
         .card-body {
@@ -271,11 +276,11 @@
             border-radius: 50%;
             position: relative;
         }
+
         .card-del:hover {
             background-color: black;
             color: beige;
         }
-        
     </style>
 
     <!-- Firebase Config 파일 삽입 -->
@@ -353,12 +358,10 @@
 
             // 스티커 이어서 붙이는 기능
             let temp_html = `
-  <button class="card-del" id="${doc.id}">X</button>
-            <div class="col">                
+            <div class="col">
+                <button class="card-del" id="${doc.id}" style="float: right;">X</button> 
                 <div class="card h-100">                    
-                    <div class="card-body">
-                        
-                        <p>응원♥</p>
+                    <div class="card-body"> 
                         <p class="card-title">From. ${guestname}</p>
                         <p class="card-text">${guestcu}</p>
                         <p class="card-text">${guesttimestk}</p>
