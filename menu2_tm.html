@@ -187,6 +187,11 @@
             flex-direction: row;
         }
 
+        .icon-box {
+            display: flex;
+            justify-content: right;
+        }
+
         .card-image {
             width: 120px;
             height: 160px;
@@ -251,10 +256,18 @@
             <div class="col card-wrap">
                 <div class="card h-100 ">
                     <div class="card-body">
-                        <p class="card-del" align="right" id="${docId}">❌</p>
+                        <div class="icon-box">
+                            <span class="material-symbols-outlined card-edit" id="${docId}">
+                                edit
+                            </span>
+                            <span class="material-symbols-outlined card-del" id="${docId}">
+                                close
+                            </span>
+                        </div>
+
+
                         <div class="card-box-wrap">
-                            <img class="card-image"
-                                src="${row['image-url']}"></img>
+                            <img class="card-image" src="${row['image-url']}"></img>
                             <div class="card-box">
                                 <p class="card-text">${row['name']}</p>
                                 <p class="card-text">${row['mbti']}</p>
@@ -268,7 +281,7 @@
                         </span>
                         <span id="${docId}" class="likes-num">${row['likes']}</span>
 
-                        <div class="icon-box">
+                        <div>
                             <button type="button" class="icon-btn">
                                 <a href="${row['github']}" target="_blank">
                                     <img class="icon-img" src="./image/blog.png">
@@ -287,13 +300,19 @@
             $('#content').append(html_temp)
         });
 
+        // 팀원 수정
+        $("#content").on('click', '.card-edit', async function (e) {
+            console.log(e.target.id)
+
+        });
+
         // 팀원 좋아요 수 추가
         $("#content").on('click', '.thumb_up', async function (e) {
 
             let clickedId = e.target.id
             let clikedLikesNum = parseInt(
-                $(".likes-num#"+clickedId).text()
-            )+1;
+                $(".likes-num#" + clickedId).text()
+            ) + 1;
 
             await updateDoc(doc(db, "members", clickedId), {
                 'likes': clikedLikesNum
@@ -326,8 +345,6 @@
     <div class="content-wrap">
         <div id="content" class="row row-cols-1 row-cols-md-6 g-4">
             <!-- 근데 여기서 줄바꿈이 왜 안되는지 모르겠습니다. HELP!! -->
-
-
         </div>
     </div>
 
