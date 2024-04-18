@@ -300,14 +300,14 @@
 
 
                         <div class="card-box-wrap">
-                            <img class="card-image" src="${row['image-url']}"></img>
+                            <img id="${docId}" class="card-image" src="${row['image-url']}"></img>
                             <div class="card-box">
-                                <p class="card-text">${row['name']}</p>
-                                <p class="card-text">${row['mbti']}</p>
-                                <p class="card-text">${row['strength']}</p>
+                                <p class="card-text card-name" id="${docId}">${row['name']}</p>
+                                <p class="card-text card-mbti" id="${docId}">${row['mbti']}</p>
+                                <p class="card-text card-strength" id="${docId}">${row['strength']}</p>
                             </div>
                         </div>
-                        <p class="card-text">${row['determination']}</p>
+                        <p id="${docId}" class="card-text card-determination">${row['determination']}</p>
 
                         <span id="${docId}" class="material-symbols-outlined thumb_up">
                             thumb_up
@@ -316,12 +316,12 @@
 
                         <div>
                             <button type="button" class="icon-btn">
-                                <a href="${row['blog']}" target="_blank">
+                                <a id="${docId}" class="card-blog" href="${row['github']}" target="_blank">
                                     <img class="icon-img" src="./image/blog.png">
                                 </a>
                             </button>
                             <button type="button" class="icon-btn">
-                                <a href="${row['github']}" target="_blank">
+                                <a id="${docId}" class="card-github" href="${row['blog']}" target="_blank">
                                     <img class="icon-img" src="./image/github-mark.png">
                                 </a>
                             </button>
@@ -335,9 +335,52 @@
 
         // 팀원 수정
         $("#content").on('click', '.card-edit', async function (e) {
-            console.log(e.target.id)
+            let clickedId = e.target.id
+            console.log($(".card-name#" + clickedId).text())
 
+            let name = $(".card-name#" + clickedId).text();
+            let imageUrl = $(".card-image#" + clickedId).attr("src");
+            let mbti = $(".card-mbti#" + clickedId).text();
+            let strength = $(".card-strength#" + clickedId).text();
+            let determination = $(".card-determination#" + clickedId).text();
+            let github = $(".card-github#" + clickedId).attr("href");
+            let blog = $(".card-blog#" + clickedId).attr("href");
+
+            const formHtml = `
+            <form id = "edit-form">
+                <div class="member-form">
+                    <input type="text" id="name" placeholder="이름" value="${name}">
+                    <input type="text" id="image-url" placeholder="이미지 URL" value="${imageUrl}">
+                    <input type="text" id="mbti" placeholder="MBTI" value="${mbti}">
+                    <input type="text" id="strength" placeholder="장점 3글자" value="${strength}">
+                    <input type="text" id="determination" placeholder="다짐" value="${determination}">
+                    <input type="text" id="github" placeholder="GitHub URL" value="${github}">
+                    <input type="text" id="blog" placeholder="Blog URL" value="${blog}">
+                    <button type="button" id="edit-btn">수정하기</button>
+                </div>
+            <form>
+            `;
+
+            $("body").append(formHtml);
+
+            $("#edit-btn").on('click', async function () {
+                let editedData = {
+                    name: $("#name").val(),
+                    imageUrl: $("#image-url").val(),
+                    mbti: $("#mbti").val(),
+                    strength: $("#strength").val(),
+                    determination: $("#determination").val(),
+                    github: $("#github").val(),
+                    blog: $("#blog").val()
+                };
+
+                await updateDoc(doc(db, "members", clickedId), editedData);
+                window.location.reload();
+            });
         });
+
+
+
 
         // 팀원 좋아요 수 추가
         $("#content").on('click', '.thumb_up', async function (e) {
@@ -400,11 +443,6 @@
 
             $(".member-form").remove();
             window.location.reload();
-        });
-
-        // 페이지 로드 시 팀원 표시
-        $(document).ready(function () {
-            displayMembers();
         });
 
     </script>
