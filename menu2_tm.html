@@ -210,6 +210,39 @@
             width: 30px;
             height: 30px;
         }
+
+        /* 입력 폼 스타일 */
+        .member-form {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .member-form input {
+            margin-bottom: 10px;
+            padding: 10px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .member-form button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: black;
+            color: beige;
+            cursor: pointer;
+        }
+
+        .member-form button:hover {
+            background-color: beige;
+            color: black;
+        }
     </style>
 
     <!-- Firebase Config 파일 삽입 -->
@@ -222,6 +255,16 @@
         import { collection, doc, addDoc, deleteDoc, updateDoc } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
         import { getDocs, orderBy, query } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
 
+        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+        const firebaseConfig = {
+            apiKey: "AIzaSyC1rzBu2dAKNSPRlL8ouFmnjGQXrkDTUrY",
+            authDomain: "sparta-7e09a.firebaseapp.com",
+            projectId: "sparta-7e09a",
+            storageBucket: "sparta-7e09a.appspot.com",
+            messagingSenderId: "386975891488",
+            appId: "1:386975891488:web:1fb74519f75e94055abc45",
+            measurementId: "G-5MZKRX9J08"
+        };
         // Firebase 인스턴스 초기화
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
@@ -292,8 +335,8 @@
 
             let clickedId = e.target.id
             let clikedLikesNum = parseInt(
-                $(".likes-num#"+clickedId).text()
-            )+1;
+                $(".likes-num#" + clickedId).text()
+            ) + 1;
 
             await updateDoc(doc(db, "members", clickedId), {
                 'likes': clikedLikesNum
@@ -307,6 +350,53 @@
             window.location.reload();
         });
 
+
+        // 팀원 추가 폼 표시
+        $(".addbox").click(function () {
+            const formHtml = `
+                <div class="member-form">
+                    <input type="text" id="name" placeholder="이름">
+                    <input type="text" id="image-url" placeholder="이미지 URL">
+                    <input type="text" id="mbti" placeholder="MBTI">
+                    <input type="text" id="strength" placeholder="Strength">
+                    <input type="text" id="determination" placeholder="다짐">
+                    <input type="text" id="github" placeholder="GitHub URL">
+                    <input type="text" id="blog" placeholder="Blog URL">
+                    <button type="button" id="submit-btn">추가</button>
+                </div>
+            `;
+            $("body").append(formHtml);
+        });
+
+        // 팀원 추가 폼 제출
+        $("body").on("click", "#submit-btn", async function () {
+            const name = $("#name").val();
+            const imageUrl = $("#image-url").val();
+            const mbti = $("#mbti").val();
+            const strength = $("#strength").val();
+            const determination = $("#determination").val();
+            const github = $("#github").val();
+            const blog = $("#blog").val();
+
+            await addDoc(collection(db, "members"), {
+                name,
+                "image-url": imageUrl,
+                mbti,
+                strength,
+                determination,
+                github,
+                blog,
+                likes: 0
+            });
+
+            $(".member-form").remove();
+            window.location.reload();
+        });
+
+        // 페이지 로드 시 팀원 표시
+        $(document).ready(function () {
+            displayMembers();
+        });
 
     </script>
 </head>
@@ -325,6 +415,9 @@
     <!-- 팀원소개 컨텐츠 시작 -->
     <div class="content-wrap">
         <div id="content" class="row row-cols-1 row-cols-md-6 g-4">
+            <!-- 팀원 추가 버튼 -->
+            <div class="addbox">추가하기</div>
+
             <!-- 근데 여기서 줄바꿈이 왜 안되는지 모르겠습니다. HELP!! -->
 
 
