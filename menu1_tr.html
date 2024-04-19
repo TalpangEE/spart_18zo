@@ -157,6 +157,17 @@
             position: absolute;
         }
 
+        .background {
+            margin-left: 0px;
+            top: 0px;
+            align-items: center;
+            position: absolute;
+            background-image: ('https://media1.tenor.com/m/-KvpWXJ01bYAAAAC/%EB%AA%B0%EB%A3%A8-%EB%AA%A8%EC%BD%94%EC%BD%94.gif');
+            opacity: 0.3;
+            height: 450px;
+            width: 750px;
+        }
+
         .text {
             margin-left: 225px;
             font-size: 40px;
@@ -177,13 +188,20 @@
             /*팀 규칙 크기&모양설정*/
             border-radius: 10%;
             border-color: rgba(22, 194, 45, 0.658);
-            background-color: rgba(105, 54, 177, 0.638);
+            background-color: rgba(1, 1, 1, 0.638);
             color: beige;
             /*팀 규칙 폰트설정*/
             font-size: 25px;
             font-family: "Single Day", cursive;
             font-weight: 400;
             font-style: normal;
+            background: url('');
+        }
+
+        body {
+            background-image: url('https://media1.tenor.com/m/-KvpWXJ01bYAAAAC/%EB%AA%B0%EB%A3%A8-%EB%AA%A8%EC%BD%94%EC%BD%94.gif');
+            background-color: rgba(255, 255, 255, 0.8);
+            background-blend-mode: lighten;
         }
     </style>
 
@@ -219,10 +237,14 @@
                 openPopup(ruleContent);
             });
 
-             // 팝업 오픈시 열리는 창 스타일
-    function openPopup(content) {
-        var popup = window.open("", "_blank", "width=400,height=300");
-        popup.document.write(`
+            // 팝업 오픈시 열리는 창 스타일
+            function openPopup(content) {
+                var width = 200;
+                var height = 300;
+                var left = (window.innerWidth - width) / 2;
+                var top = (window.innerHeight - height) / 2;
+                var popup = window.open("", "_blank", 'width=${width},height=${height},left=${left},top=${top}');
+                popup.document.write(`
             <html>
             <head>
                 <title>팝업창</title>
@@ -260,32 +282,47 @@
             </body>
             </html>
         `);
-    }
-            
+            }
+
         }
-    );
+        );
     </script>
 </head>
 
 <body>
+    <div class="background>">
+        <div style="position: absolute;">
+            <img
+                background="https://media1.tenor.com/m/-KvpWXJ01bYAAAAC/%EB%AA%B0%EB%A3%A8-%EB%AA%A8%EC%BD%94%EC%BD%94.gif">
+        </div>
 
-    <!-- 탑헤더  -->
-    <div class="topheader">
-        <!-- 탑헤더 메뉴버튼 생성 -->
-        <button type="button" id="hhh" class="hmbtn">H</button>
-        <button type="button" id="menubtn" class="trbtn">팀규칙</button>
-        <button type="button" id="menubtn" class="tmbtn">팀원소개</button>
-        <button type="button" id="menubtn" class="cubtn">응원하기</button>
+        <!-- 탑헤더  -->
+        <div class="topheader">
+            <!-- 탑헤더 메뉴버튼 생성 -->
+            <button type="button" id="hhh" class="hmbtn">H</button>
+            <button type="button" id="menubtn" class="trbtn">팀소개</button>
+            <button type="button" id="menubtn" class="tmbtn">팀원소개</button>
+            <button type="button" id="menubtn" class="cubtn">응원하기</button>
+        </div>
+        <!--팀규칙 본문시작-->
+
+        <div class="container">
+            <div style="position: relative;">
+                <img src="https://d3kxs6kpbh59hp.cloudfront.net/community/COMMUNITY/1fd86ae5ff7a4415a7bf8446606aa71c/0bfd9d34a77846d284e67cd1329c50bd_1649160032.png"
+                    style="width: 750px; height:450px;">
+
+                <p><button class="text">우리 팀은말이에요.</button></p>
+            </div>
+            <div class="background">
+                <div style="position: absolute; top:0px; left: 0px;">
+                    <img src="" style="width: 750px; height: 450px; opacity: 0.7;">
+                </div>
+            </div>
+        </div>
+
+
     </div>
-
-    <!--팀규칙 본문시작-->
-
-    <div class="container">
-        <img src="https://opgg-com-image.akamaized.net/attach/images/20200729030331.589638.jpg">
-        <p><button class="text">이것이 규칙이다.</button></p>
     </div>
-    </div>
-
 </body>
 
 </html>
