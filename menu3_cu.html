@@ -291,7 +291,7 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
         import { getFirestore } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
         import { collection, addDoc } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
-        import { getDocs, deleteDoc, updateDoc, doc } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+        import { getDocs, deleteDoc, updateDoc, doc, getDoc } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
 
         // Firebase 인스턴스 초기화
         const app = initializeApp(firebaseConfig);
@@ -375,10 +375,21 @@
 
         $("#stkspaced").on('click', '.card-del', async function (e) {
 
-            console.log(e.target.id)
-            await deleteDoc(doc(db, "cu", e.target.id));
+            let ddoc = await getDoc(doc(db, "cu", e.target.id));
+            let deldoc = ddoc.data();
+            let delpw = prompt('비밀번호를 입력해주세요!');
 
-            window.location.reload();
+            console.log(deldoc);
+            console.log(delpw);
+
+            if(delpw==deldoc['guestpw']){
+                alert('삭제되었습니다.')
+                await deleteDoc(doc(db, "cu", e.target.id));
+                window.location.reload();
+            } else {
+                alert('비밀번호가 일치하지 않습니다.');
+                //window.location.reload();
+            };
         });
 
         // 제이쿼리로 응원하기 박스(cuboxd) 토글
