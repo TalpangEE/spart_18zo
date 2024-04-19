@@ -529,12 +529,18 @@
                 $(".memmodal-box").show();
                 $(".modal-bg").show();
             });
+            $("#cancel-btn").click( function () {
+                $("#memberplus").toggle();
+                $(".memmodal-box").hide();
+                $(".modal-bg").hide();
+            });
 
             // 팀원 추가  제출 버튼 클릭 시
-            $("#submit-btn").click(async function () {
+            $("#submit-btn").on('click', async function () {
                 await addMember();
                 $(".modal-box").hide();
                 $(".modal-bg").hide();
+                
             });
         });
     </script>
