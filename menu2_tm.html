@@ -383,7 +383,7 @@
 
 
                    <div class="card-box-wrap">
-                       <img  id="${docId}" class="card-image" src="${row['image-url']}"></img>
+                       <img  id="${docId}" class="card-image" src="${row['imageUrl']}"></img>
                        <div class="card-box">
                            <p class="card-text" style="font-size:20px; font-weight:bold;">이름 :</p>
                            <p class="card-text card-name" id="${docId}">${row['name']}</p>
@@ -527,7 +527,7 @@
 
             await addDoc(collection(db, "members"), {
                 name,
-                "image-url": imageUrl,
+                "imageUrl": imageUrl,
                 mbti,
                 strength,
                 collaboration,
