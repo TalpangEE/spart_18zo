@@ -312,6 +312,7 @@
 
 
         }
+        
 
         .memmodal-input {
             width: 460px;
@@ -493,7 +494,7 @@
 
 
 
-        // 팀원 추가 폼 제출
+        // 팀원 추가 제출
         async function addMember() {
             const name = $("#name").val();
             const imageUrl = $("#image-url").val();
@@ -511,7 +512,7 @@
                 determination,
                 github,
                 blog,
-                likes: 0 // 초기 좋아요 수는 0으로 설정
+                likes: 0 
             });
 
             // 팀원 추가 후 페이지 새로고침
@@ -525,11 +526,15 @@
             // 팀원 추가 버튼 클릭 시 모달 표시/숨기기
             $("#addmember").click(function () {
                 $("#memberplus").toggle();
+                $(".modal-box").show();
+                $(".modal-bg").show();
             });
 
-            // 팀원 추가 폼 제출 버튼 클릭 시
+            // 팀원 추가  제출 버튼 클릭 시
             $("#submit-btn").click(async function () {
                 await addMember();
+                $(".modal-box").hide();
+                $(".modal-bg").hide();
             });
         });
     </script>
@@ -549,7 +554,7 @@
     <!-- 팀원소개 컨텐츠 시작 -->
 
     <div class="modal-box" id="memberplus" style="display: none;">
-        <div class="memmodal">
+        <div class="memmodal-box">
             <input type="text" id="name" class="memmodal-input" placeholder="이름">
             <input type="text" id="image-url" class="memmodal-input" placeholder="이미지 URL">
             <input type="text" id="mbti" class="memmodal-input" placeholder="MBTI">
